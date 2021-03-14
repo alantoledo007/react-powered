@@ -1,0 +1,56 @@
+{
+  "name": "react-ui-maker",
+  "version": "0.0.0",
+  "description": "Create an UI with react, consuming an API Rest, really fastly",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alantoledo007/react-ui-maker.git"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "CRUD",
+    "UI",
+    "API",
+    "components",
+    "customizable"
+  ],
+  "author": "Alan Toledo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alantoledo007/react-ui-maker/issues"
+  },
+  "homepage": "https://github.com/alantoledo007/react-ui-maker#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.15.4",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "webpack": "^5.24.4"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "webpack-cli": "^4.5.0"
+  }
+}
