@@ -1,10 +1,12 @@
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import React, { createContext } from "react";
 import { Provider } from "react-redux";
-
+import defaultStore from "./redux/store";
 export { reducer } from "./redux/reducer";
 export { default as List } from "./views/List";
 export { default as Create } from "./views/Create";
 export { default as Update } from "./views/Update";
+export { default as Show } from "./views/Show";
 
 export const ConfigContext = createContext({});
 
@@ -15,8 +17,11 @@ const defaultConfig = {
   list: {
     path: "/",
     data_map: "",
+    custom: null,
+    attributes: [],
+    component: null,
     actions: {
-      active: true,
+      active: false,
       label: "Actions",
       config: [
         { label: "show", action: "show" },
@@ -28,6 +33,15 @@ const defaultConfig = {
 
   create: {
     path: "/",
+  },
+
+  show: {
+    path: "/:id",
+    attributes: [],
+  },
+
+  update: {
+    getter: {},
   },
 
   destroy: {
@@ -52,6 +66,10 @@ const mapConfig = (config) => {
       ...defaultConfig.create,
       ...(config.create || {}),
     },
+    show: {
+      ...defaultConfig.show,
+      ...(config.show || {}),
+    },
     update: {
       ...defaultConfig.update,
       ...(config.update || {}),
@@ -62,11 +80,20 @@ const mapConfig = (config) => {
     },
   };
 };
-export default function FastReactUI({ store, children, config }) {
+
+export const defaultTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#4285F4",
+    },
+  },
+});
+
+export default function ReactUiMaker({ store, children, config, theme }) {
   return (
-    <Provider store={store}>
+    <Provider store={store || defaultStore}>
       <ConfigContext.Provider value={{ ...mapConfig(config) }}>
-        {children}
+        <ThemeProvider theme={theme || defaultTheme}>{children}</ThemeProvider>
       </ConfigContext.Provider>
     </Provider>
   );

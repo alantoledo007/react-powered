@@ -10,7 +10,7 @@ import {
 import { ConfigContext } from "../..";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { fastReactUICreate } from "../../redux/actions";
+import { reactUiMakerCreate } from "../../redux/actions";
 
 export default function Create(props) {
   const config = useContext(ConfigContext);
@@ -23,7 +23,7 @@ export default function Create(props) {
   const onSubmit = (data) => {
     setLoading(true);
     reset();
-    dispatch(fastReactUICreate(data, config)).finally(() => {
+    dispatch(reactUiMakerCreate(data, config)).finally(() => {
       setLoading(false);
     });
   };

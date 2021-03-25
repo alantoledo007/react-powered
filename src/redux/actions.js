@@ -1,12 +1,13 @@
 import axios from "axios";
 
-export const FAST_REACT_UI_LIST = "FAST_REACT_UI_LIST";
-export const FAST_REACT_UI_CREATE = "FAST_REACT_UI_CREATE";
-export const FAST_REACT_UI_UPDATE = "FAST_REACT_UI_UPDATE";
-export const FAST_REACT_UI_DESTROY = "FAST_REACT_UI_DESTROY";
-export const FAST_REACT_UI_DATA_TO_UPDATE = "FAST_REACT_UI_DATA_TO_UPDATE";
-export const FAST_REACT_UI_CLEAR_DATA_TO_UPDATE =
-  "FAST_REACT_UI_CLEAR_DATA_TO_UPDATE";
+export const REACT_UI_MAKER_LIST = "REACT_UI_MAKER_LIST";
+export const REACT_UI_MAKER_CREATE = "REACT_UI_MAKER_CREATE";
+export const REACT_UI_MAKER_UPDATE = "REACT_UI_MAKER_UPDATE";
+export const REACT_UI_MAKER_DESTROY = "REACT_UI_MAKER_DESTROY";
+export const REACT_UI_MAKER_DATA_TO_UPDATE = "REACT_UI_MAKER_DATA_TO_UPDATE";
+export const REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE =
+  "REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE";
+export const REACT_UI_MAKER_SHOW = "REACT_UI_MAKER_SHOW";
 
 export const dataMap = (data, data_map) => {
   if (!data_map) return data;
@@ -23,11 +24,22 @@ export const dataFormat = (data, data_format) => {
   return data_format(data);
 };
 
+const URLHelper = () => {
+  const paths = window.location.pathname
+    .split("/")
+    .filter((item) => item !== "");
+  return {
+    paths,
+    getParam: (param) =>
+      new URLSearchParams(document.location.search.substring(1)).get(param),
+  };
+};
+
 const pathHandler = (base_url, path) => {
   return String(path).startsWith("http") ? path : base_url + path;
 };
 
-export const fastReactUIList = ({
+export const reactUiMakerList = ({
   headers: defaultHeaders,
   record,
   base_url,
@@ -43,7 +55,7 @@ export const fastReactUIList = ({
       })
       .then((res) => {
         return dispatch({
-          type: FAST_REACT_UI_LIST,
+          type: REACT_UI_MAKER_LIST,
           payload: {
             record,
             data: dataMap(res.data, data_map),
@@ -54,7 +66,7 @@ export const fastReactUIList = ({
   };
 };
 
-export const fastReactUICreate = (
+export const reactUiMakerCreate = (
   data,
   {
     record,
@@ -73,7 +85,7 @@ export const fastReactUICreate = (
       })
       .then((res) => {
         return dispatch({
-          type: FAST_REACT_UI_CREATE,
+          type: REACT_UI_MAKER_CREATE,
           payload: {
             record,
             data: res.data,
@@ -84,7 +96,7 @@ export const fastReactUICreate = (
   };
 };
 
-export const fastReactUISetDataToUpdate = (
+export const reactUiMakerSetDataToUpdate = (
   pk,
   {
     headers: defaultHeaders,
@@ -93,19 +105,9 @@ export const fastReactUISetDataToUpdate = (
     update: { headers, getter, default_data_format },
   }
 ) => {
-  const paths = window.location.pathname
-    .split("/")
-    .filter((item) => item !== "");
-
   const pkHandler = (pk) => {
     if (!pk) {
-      const URLHelper = {
-        paths,
-        paths_length: paths.length,
-        getParam: (param) =>
-          new URLSearchParams(document.location.search.substring(1)).get(param),
-      };
-      return getter.getPk(URLHelper);
+      return getter.getPk(URLHelper());
     }
     return pk;
   };
@@ -129,7 +131,7 @@ export const fastReactUISetDataToUpdate = (
       })
       .then((res) => {
         return dispatch({
-          type: FAST_REACT_UI_DATA_TO_UPDATE,
+          type: REACT_UI_MAKER_DATA_TO_UPDATE,
           payload: {
             record,
             data: default_data_format(res.data),
@@ -140,7 +142,7 @@ export const fastReactUISetDataToUpdate = (
   };
 };
 
-export const fastReactUIUpdate = (
+export const reactUiMakerUpdate = (
   pk,
   data,
   {
@@ -164,7 +166,7 @@ export const fastReactUIUpdate = (
       )
       .then((res) => {
         return dispatch({
-          type: FAST_REACT_UI_UPDATE,
+          type: REACT_UI_MAKER_UPDATE,
           payload: {
             record,
             data: res.data,
@@ -175,7 +177,35 @@ export const fastReactUIUpdate = (
   };
 };
 
-export const fastReactUIDestroy = (
+export const reactUiMakerShow = ({
+  record,
+  base_url,
+  headers: defaultHeaders,
+  show: { path, headers, data_map, getPk },
+}) => {
+  return (dispatch) => {
+    const pk = getPk(URLHelper());
+    return axios
+      .get(pathHandler(base_url, path).replace(":pk", pk), {
+        headers: {
+          ...defaultHeaders,
+          ...headers,
+        },
+      })
+      .then((res) => {
+        return dispatch({
+          type: REACT_UI_MAKER_SHOW,
+          payload: {
+            record,
+            data: data_map ? data_map(res.data) : res.data,
+            response: res,
+          },
+        });
+      });
+  };
+};
+
+export const reactUiMakerDestroy = (
   pk,
   { record, base_url, headers: defaultHeaders, destroy: { path, headers } }
 ) => {
@@ -189,7 +219,7 @@ export const fastReactUIDestroy = (
       })
       .then((res) => {
         return dispatch({
-          type: FAST_REACT_UI_DESTROY,
+          type: REACT_UI_MAKER_DESTROY,
           payload: {
             record,
             data: res.data,

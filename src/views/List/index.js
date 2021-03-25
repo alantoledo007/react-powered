@@ -10,22 +10,27 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfigContext } from "../..";
-import { fastReactUIList } from "../../redux/actions";
+import { reactUiMakerList } from "../../redux/actions";
 import Item from "./Item";
 
 export default function List(props) {
   const config = useContext(ConfigContext);
   const records = useSelector(
     (state) =>
-      state.fast_react_ui_reducer[config.record] &&
-      state.fast_react_ui_reducer[config.record].records
+      state.react_ui_maker_reducer[config.record] &&
+      state.react_ui_maker_reducer[config.record].records
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (records) return;
-    dispatch(fastReactUIList(config));
+    dispatch(reactUiMakerList(config));
   }, [records]);
+
+  if (config.list.component) {
+    return <config.list.component data={records} />;
+  }
+
   const attrs = config.list.attributes;
   return (
     <TableContainer component={Paper}>

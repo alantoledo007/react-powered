@@ -11,8 +11,8 @@ import { ConfigContext } from "../..";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fastReactUIUpdate,
-  fastReactUISetDataToUpdate,
+  reactUiMakerUpdate,
+  reactUiMakerSetDataToUpdate,
 } from "../../redux/actions";
 
 export default function Update(props) {
@@ -21,12 +21,12 @@ export default function Update(props) {
   const [loading, setLoading] = useState(false);
   const data_to_update = useSelector(
     (state) =>
-      state.fast_react_ui_reducer[record] &&
-      state.fast_react_ui_reducer[record].data_to_update
+      state.react_ui_maker_reducer[record] &&
+      state.react_ui_maker_reducer[record].data_to_update
   );
   const dispatch = useDispatch();
   if (typeof window === "undefined") return null;
-  dispatch(fastReactUISetDataToUpdate(null, config));
+  dispatch(reactUiMakerSetDataToUpdate(null, config));
   if (!data_to_update) return null;
   return <Form data_to_update={data_to_update} config={config} />;
 }
@@ -44,9 +44,11 @@ const Form = (props) => {
 
   const onSubmit = (data) => {
     setLoading(true);
-    dispatch(fastReactUIUpdate(data_to_update.pk, data, config)).finally(() => {
-      setLoading(false);
-    });
+    dispatch(reactUiMakerUpdate(data_to_update.pk, data, config)).finally(
+      () => {
+        setLoading(false);
+      }
+    );
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

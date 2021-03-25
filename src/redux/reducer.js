@@ -1,17 +1,18 @@
 import {
-  FAST_REACT_UI_CLEAR_DATA_TO_UPDATE,
-  FAST_REACT_UI_CREATE,
-  FAST_REACT_UI_DATA_TO_UPDATE,
-  FAST_REACT_UI_DESTROY,
-  FAST_REACT_UI_LIST,
-  FAST_REACT_UI_UPDATE,
+  REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE,
+  REACT_UI_MAKER_CREATE,
+  REACT_UI_MAKER_DATA_TO_UPDATE,
+  REACT_UI_MAKER_DESTROY,
+  REACT_UI_MAKER_LIST,
+  REACT_UI_MAKER_SHOW,
+  REACT_UI_MAKER_UPDATE,
 } from "./actions";
 
 const initialState = {};
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FAST_REACT_UI_LIST:
+    case REACT_UI_MAKER_LIST:
       return {
         ...state,
         [action.payload.record]: {
@@ -19,7 +20,7 @@ export const reducer = (state = initialState, action) => {
           records: action.payload.data,
         },
       };
-    case FAST_REACT_UI_CREATE:
+    case REACT_UI_MAKER_CREATE:
       return {
         ...state,
         [action.payload.record]: {
@@ -27,7 +28,7 @@ export const reducer = (state = initialState, action) => {
           records: undefined,
         },
       };
-    case FAST_REACT_UI_DATA_TO_UPDATE:
+    case REACT_UI_MAKER_DATA_TO_UPDATE:
       return {
         ...state,
         [action.payload.record]: {
@@ -41,7 +42,7 @@ export const reducer = (state = initialState, action) => {
           },
         },
       };
-    case FAST_REACT_UI_UPDATE:
+    case REACT_UI_MAKER_UPDATE:
       return {
         ...state,
         [action.payload.record]: {
@@ -49,7 +50,15 @@ export const reducer = (state = initialState, action) => {
           records: undefined,
         },
       };
-    case FAST_REACT_UI_CLEAR_DATA_TO_UPDATE:
+    case REACT_UI_MAKER_SHOW:
+      return {
+        ...state,
+        [action.payload.record]: {
+          ...state[action.payload.record],
+          show: action.payload.data,
+        },
+      };
+    case REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE:
       return {
         ...state,
         [action.payload.record]: {
@@ -58,7 +67,7 @@ export const reducer = (state = initialState, action) => {
         },
       };
 
-    case FAST_REACT_UI_DESTROY:
+    case REACT_UI_MAKER_DESTROY:
       return {
         ...state,
         [action.payload.record]: {

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Button, TableCell, TableRow } from "@material-ui/core";
 import {
   dataMap,
-  fastReactUIDestroy,
-  fastReactUISetDataToUpdate,
-  FAST_REACT_UI_CLEAR_DATA_TO_UPDATE,
+  reactUiMakerDestroy,
+  reactUiMakerSetDataToUpdate,
+  REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE,
 } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -24,10 +24,10 @@ export default function Item({ data, config }) {
   const handleDestroy = (data) => {
     setLoading(true);
     dispatch({
-      type: FAST_REACT_UI_CLEAR_DATA_TO_UPDATE,
+      type: REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE,
       payload: { record: config.record },
     });
-    dispatch(fastReactUIDestroy(getPk(data, pk_destroy), config)).finally(
+    dispatch(reactUiMakerDestroy(getPk(data, pk_destroy), config)).finally(
       () => {
         setLoading(false);
       }
@@ -36,21 +36,26 @@ export default function Item({ data, config }) {
   const handleUpdate = async (data) => {
     setLoading(true);
     dispatch({
-      type: FAST_REACT_UI_CLEAR_DATA_TO_UPDATE,
+      type: REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE,
       payload: { record: config.record },
     });
     dispatch(
-      fastReactUISetDataToUpdate(getPk(data, pk_update), config)
+      reactUiMakerSetDataToUpdate(getPk(data, pk_update), config)
     ).finally(() => {
       setLoading(false);
     });
   };
+
+  const handleShow = async (data) => {};
   const handleActions = (action) => {
     if (action === "destroy") {
       return () => handleDestroy(data);
     }
     if (action === "update") {
       return () => handleUpdate(data);
+    }
+    if (action === "show") {
+      return () => handleShow(data);
     }
     return () => {};
   };
@@ -70,15 +75,20 @@ export default function Item({ data, config }) {
       ))}
       {actions.active && actions.config.length > 0 && (
         <TableCell>
-          {actions.config.map((item, key) => (
-            <Button
-              key={key}
-              disabled={loading}
-              onClick={handleActions(item.action)}
-            >
-              {item.label}
-            </Button>
-          ))}
+          {actions.config.map((item, key) => {
+            if (item.component) {
+              return <item.component pk={getPk(data, pk_update)} key={key} />;
+            }
+            return (
+              <Button
+                key={key}
+                disabled={loading}
+                onClick={handleActions(item.action)}
+              >
+                {item.label}
+              </Button>
+            );
+          })}
         </TableCell>
       )}
     </TableRow>
