@@ -1,12 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  Grid,
-  Input,
-  InputLabel,
-} from '@material-ui/core';
+import {Button, FormControl, Grid, TextField} from '@material-ui/core';
 import {ConfigContext} from '../..';
 import {useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
@@ -68,22 +61,26 @@ const Form = (props) => {
       {(update.fields || create.fields).map((item) => (
         <div key={item.name}>
           <FormControl>
-            <InputLabel htmlFor={item.key}>
-              {item.label || item.name}
-            </InputLabel>
-            <Input
+            <TextField
+              error
               id={item.name}
               name={item.name}
-              type={item.type || 'text'}
-              aria-describedby={item.placeholder || item.name}
+              label={item.label || item.name}
+              helperText={
+                errors[item.name] && !item.errorHAndler
+                  ? item.errorsMessages &&
+                    item.errorsMessages[errors[item.name].type]
+                    ? item.errorsMessages[errors[item.name].type]
+                    : errors[item.name].type
+                  : item.helper_text
+              }
+              inputRef={item.validators ? register(item.validators) : register}
               placeholder={item.placeholder || item.name}
-              inputRef={register}
-              defaultValue={data_to_update.defaultValues[item.name]}
+              error={errors[item.name]}
               disabled={loading}
+              defaultValue={data_to_update.defaultValues[item.name]}
+              variant="outlined"
             />
-            {item.helper_text && (
-              <FormHelperText>{item.helper_text}</FormHelperText>
-            )}
           </FormControl>
         </div>
       ))}
