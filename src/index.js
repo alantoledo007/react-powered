@@ -1,42 +1,45 @@
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import React, { createContext } from "react";
-import { Provider } from "react-redux";
-import defaultStore from "./redux/store";
-export { reducer } from "./redux/reducer";
-export { default as List } from "./views/List";
-export { default as Create } from "./views/Create";
-export { default as Update } from "./views/Update";
-export { default as Show } from "./views/Show";
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import React, {createContext} from 'react';
+import {Provider} from 'react-redux';
+import defaultStore from './redux/store';
+export {reducer} from './redux/reducer';
+export {default as List} from './views/List';
+export {default as Create} from './views/Create';
+export {default as Update} from './views/Update';
+export {default as Show} from './views/Show';
 
 export const ConfigContext = createContext({});
 
 const defaultConfig = {
-  base_url: "",
+  base_url: '',
   headers: {},
 
   list: {
-    path: "/",
-    data_map: "",
+    path: '/',
+    data_map: '',
     custom: null,
     attributes: [],
     component: null,
     actions: {
       active: false,
-      label: "Actions",
+      label: 'Actions',
       config: [
-        { label: "show", action: "show" },
-        { label: "edit", action: "edit" },
-        { label: "delete", action: "destroy" },
+        {label: 'show', action: 'show'},
+        {label: 'edit', action: 'edit'},
+        {label: 'delete', action: 'destroy'},
       ],
     },
   },
 
   create: {
-    path: "/",
+    path: '/',
+    fields: [],
+    submit: null,
+    cancel: null,
   },
 
   show: {
-    path: "/:id",
+    path: '/:id',
     attributes: [],
   },
 
@@ -45,8 +48,8 @@ const defaultConfig = {
   },
 
   destroy: {
-    path: "/:pk",
-    pk: "id",
+    path: '/:pk',
+    pk: 'id',
   },
 };
 
@@ -84,15 +87,15 @@ const mapConfig = (config) => {
 export const defaultTheme = createMuiTheme({
   palette: {
     primary: {
-      main: "#4285F4",
+      main: '#4285F4',
     },
   },
 });
 
-export default function ReactUiMaker({ store, children, config, theme }) {
+export default function ReactUiMaker({store, children, config, theme}) {
   return (
     <Provider store={store || defaultStore}>
-      <ConfigContext.Provider value={{ ...mapConfig(config) }}>
+      <ConfigContext.Provider value={{...mapConfig(config)}}>
         <ThemeProvider theme={theme || defaultTheme}>{children}</ThemeProvider>
       </ConfigContext.Provider>
     </Provider>

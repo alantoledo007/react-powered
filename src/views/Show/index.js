@@ -1,8 +1,8 @@
-import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
-import React, { useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { reactUiMakerShow } from "../../redux/actions";
-import { ConfigContext } from "../..";
+import {Divider, List, ListItem, ListItemText} from '@material-ui/core';
+import React, {useContext, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {reactUiMakerShow} from '../../redux/actions';
+import {ConfigContext} from '../..';
 
 export default function Show() {
   const config = useContext(ConfigContext);
@@ -10,7 +10,7 @@ export default function Show() {
     (state) =>
       config &&
       state.react_ui_maker_reducer[config.record] &&
-      state.react_ui_maker_reducer[config.record].show
+      state.react_ui_maker_reducer[config.record].show,
   );
   const dispatch = useDispatch(config);
 
@@ -19,6 +19,10 @@ export default function Show() {
   }, []);
 
   if (!details) return null;
+
+  if (config.show.component) {
+    return <config.show.component details={details} />;
+  }
 
   return (
     <List component="nav">

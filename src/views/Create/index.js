@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useState} from 'react';
 import {
   Button,
   FormControl,
@@ -6,16 +6,16 @@ import {
   Grid,
   Input,
   InputLabel,
-} from "@material-ui/core";
-import { ConfigContext } from "../..";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { reactUiMakerCreate } from "../../redux/actions";
+} from '@material-ui/core';
+import {ConfigContext} from '../..';
+import {useForm} from 'react-hook-form';
+import {useDispatch} from 'react-redux';
+import {reactUiMakerCreate} from '../../redux/actions';
 
 export default function Create(props) {
   const config = useContext(ConfigContext);
-  const { create, record } = config;
-  const { register, handleSubmit, errors, reset } = useForm();
+  const {create, record} = config;
+  const {register, handleSubmit, errors, reset} = useForm();
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -27,6 +27,11 @@ export default function Create(props) {
       setLoading(false);
     });
   };
+
+  if (config.create.component) {
+    return <config.create.component fields={create.fields} />;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {create.fields.map((item) => (
@@ -38,7 +43,7 @@ export default function Create(props) {
             <Input
               id={item.name}
               name={item.name}
-              type={item.type || "text"}
+              type={item.type || 'text'}
               aria-describedby={item.placeholder || item.name}
               placeholder={item.placeholder || item.name}
               inputRef={register}
@@ -71,8 +76,7 @@ export default function Create(props) {
               type="submit"
               variant="contained"
               disabled={loading}
-              color="primary"
-            >
+              color="primary">
               Enviar
             </Button>
           </Grid>
