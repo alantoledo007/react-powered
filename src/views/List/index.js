@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, {useContext, useEffect} from 'react';
 import {
   Paper,
   Table,
@@ -7,18 +7,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { ConfigContext } from "../..";
-import { reactUiMakerList } from "../../redux/actions";
-import Item from "./Item";
+} from '@material-ui/core';
+import {useDispatch, useSelector} from 'react-redux';
+import {ConfigContext} from '../..';
+import {reactUiMakerList} from '../../redux/actions';
+import Item from './Item';
 
 export default function List(props) {
   const config = useContext(ConfigContext);
   const records = useSelector(
     (state) =>
       state.react_ui_maker_reducer[config.record] &&
-      state.react_ui_maker_reducer[config.record].records
+      state.react_ui_maker_reducer[config.record].records,
   );
   const dispatch = useDispatch();
 

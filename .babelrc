@@ -1,4 +1,11 @@
 {
-  "presets": ["env"],
-  "plugins": ["transform-object-rest-spread", "transform-react-jsx"]
+  "presets": [[
+    "@babel/preset-env",
+    {
+      "targets": {
+        "node": "10"
+      }
+    }
+  ],
+  "@babel/preset-react"]
 }

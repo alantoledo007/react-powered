@@ -1,46 +1,46 @@
-import React, { useState } from "react";
-import { Button, TableCell, TableRow } from "@material-ui/core";
+import React, {useState} from 'react';
+import {Button, TableCell, TableRow} from '@material-ui/core';
 import {
   dataMap,
   reactUiMakerDestroy,
   reactUiMakerSetDataToUpdate,
   REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE,
-} from "../../../redux/actions";
-import { useDispatch } from "react-redux";
+} from '../../../redux/actions';
+import {useDispatch} from 'react-redux';
 
-export default function Item({ data, config }) {
+export default function Item({data, config}) {
   const {
-    list: { attributes, actions },
-    destroy: { pk: pk_destroy },
+    list: {attributes, actions},
+    destroy: {pk: pk_destroy},
     update: {
-      getter: { pk: pk_update },
+      getter: {pk: pk_update},
     },
   } = config;
 
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
-  const getPk = (data, pk) => (typeof pk === "function" ? pk(data) : data[pk]);
+  const getPk = (data, pk) => (typeof pk === 'function' ? pk(data) : data[pk]);
   const handleDestroy = (data) => {
     setLoading(true);
     dispatch({
       type: REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE,
-      payload: { record: config.record },
+      payload: {record: config.record},
     });
     dispatch(reactUiMakerDestroy(getPk(data, pk_destroy), config)).finally(
       () => {
         setLoading(false);
-      }
+      },
     );
   };
   const handleUpdate = async (data) => {
     setLoading(true);
     dispatch({
       type: REACT_UI_MAKER_CLEAR_DATA_TO_UPDATE,
-      payload: { record: config.record },
+      payload: {record: config.record},
     });
     dispatch(
-      reactUiMakerSetDataToUpdate(getPk(data, pk_update), config)
+      reactUiMakerSetDataToUpdate(getPk(data, pk_update), config),
     ).finally(() => {
       setLoading(false);
     });
@@ -48,13 +48,13 @@ export default function Item({ data, config }) {
 
   const handleShow = async (data) => {};
   const handleActions = (action) => {
-    if (action === "destroy") {
+    if (action === 'destroy') {
       return () => handleDestroy(data);
     }
-    if (action === "update") {
+    if (action === 'update') {
       return () => handleUpdate(data);
     }
-    if (action === "show") {
+    if (action === 'show') {
       return () => handleShow(data);
     }
     return () => {};
@@ -83,8 +83,7 @@ export default function Item({ data, config }) {
               <Button
                 key={key}
                 disabled={loading}
-                onClick={handleActions(item.action)}
-              >
+                onClick={handleActions(item.action)}>
                 {item.label}
               </Button>
             );
