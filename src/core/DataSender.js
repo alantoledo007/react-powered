@@ -1,7 +1,8 @@
 import React from 'react';
 import Form from '../components/Form';
+import {send} from '../redux/records.slice';
 
-function CreateRecord(config) {
+function DataSender(config) {
   this.config = {
     method: 'post',
     path: '/',
@@ -14,9 +15,11 @@ function CreateRecord(config) {
   };
 }
 
-CreateRecord.prototype.createForm = function (fields, defaultValues, schema) {
-  return () => (
+DataSender.prototype.createForm = function (fields, defaultValues, schema) {
+  return ({HeaderComponent, FooterComponent}) => (
     <Form
+      HeaderComponent={HeaderComponent}
+      FooterComponent={FooterComponent}
       config={this.config}
       fields={fields}
       defaultValues={defaultValues}
@@ -25,4 +28,8 @@ CreateRecord.prototype.createForm = function (fields, defaultValues, schema) {
   );
 };
 
-export default CreateRecord;
+DataSender.prototype.setForm = function (FormComponent) {
+  return <FormComponent send={send} />;
+};
+
+export default DataSender;

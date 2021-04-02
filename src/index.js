@@ -9,7 +9,7 @@ export {default as Create} from './views/Create';
 export {default as Update} from './views/Update';
 export {default as Show} from './views/Show';
 
-export {default as CreateRecord} from './core/CreateRecord';
+export {default as DataSender} from './core/DataSender';
 
 export const defaultTheme = createMuiTheme({
   palette: {

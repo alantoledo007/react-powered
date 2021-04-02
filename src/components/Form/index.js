@@ -15,7 +15,14 @@ import {useDispatch} from 'react-redux';
 import {send} from '../../redux/records.slice';
 
 export default function Form(props) {
-  const {config, schema, fields, defaultValues} = props;
+  const {
+    config,
+    schema,
+    fields,
+    defaultValues,
+    HeaderComponent,
+    FooterComponent,
+  } = props;
   const ctxConfig = useConfig();
   const formConfig = schema ? {resolver: yupResolver(schema)} : {};
 
@@ -48,6 +55,7 @@ export default function Form(props) {
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      {HeaderComponent && <HeaderComponent />}
       {fields.map((item, key) => {
         if (typeof item === 'function')
           return debugComponent(item({defaultValue: '', register}));
@@ -61,7 +69,7 @@ export default function Form(props) {
           inputRef: register,
           defaultValue:
             defaultValue || defaultValues ? defaultValues[name] : undefined,
-          helperText,
+          helperText: (errors[name] && errors[name].message) || helperText,
           error: typeof errors[name] !== 'undefined',
         };
 
@@ -92,11 +100,9 @@ export default function Form(props) {
                   }
                   label={label}
                 />
-                {helperText && (
+                {((errors[name] && errors[name].message) || helperText) && (
                   <FormHelperText>
-                    {errors[name]
-                      ? errors[name].message || helperText
-                      : helperText}
+                    {(errors[name] && errors[name].message) || helperText}
                   </FormHelperText>
                 )}
               </FormControl>
@@ -109,6 +115,7 @@ export default function Form(props) {
           </Box>
         );
       })}
+      {FooterComponent && <FooterComponent />}
     </Box>
   );
 }
