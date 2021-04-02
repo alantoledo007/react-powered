@@ -1,10 +1,14 @@
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
-import thunk from "redux-thunk";
-import { reducer as react_ui_maker_reducer } from "./reducer";
-const store = createStore(
-  combineReducers({
-    react_ui_maker_reducer,
-  }),
-  compose(applyMiddleware(thunk))
-);
+import thunk from 'redux-thunk';
+import records from './records.slice';
+import {configureStore} from '@reduxjs/toolkit';
+
+const reducer = {records};
+
+const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(thunk);
+  },
+});
+
 export default store;
