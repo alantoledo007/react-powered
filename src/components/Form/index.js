@@ -12,7 +12,7 @@ import {useForm} from 'react-hook-form';
 import isReact from 'is-react';
 import {yupResolver} from '@hookform/resolvers/yup';
 import useConfig from '../../hooks/useConfig';
-import {read, send} from '../../redux/slice';
+import {destroy, read, send} from '../../redux/slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {getRecord} from '../../core/utils';
 
@@ -44,6 +44,10 @@ export default function Form(props) {
     };
     getDefaultValues();
   }, [dispatch]);
+
+  const destroyHandler = (destroyer) => {
+    dispatch(destroy({...ctxConfig, destroyer}));
+  };
 
   const toLower = (value) => {
     if (value === undefined || value === null) return undefined;
@@ -81,6 +85,7 @@ export default function Form(props) {
   if (CustomComponent)
     return (
       <CustomComponent
+        destroy={destroyHandler}
         loading={!!(config.reader && !readerDefaultValues)}
         details={readerDefaultValues}
         onSubmit={handleSubmit(onSubmit)}
@@ -98,7 +103,7 @@ export default function Form(props) {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       {...containerProps}>
-      {HeaderComponent && <HeaderComponent />}
+      {HeaderComponent && <HeaderComponent destroy={destroyHandler} />}
       {fields.map((item, key) => {
         if (typeof item === 'function')
           return debugComponent(item({defaultValue: '', register}));
@@ -157,7 +162,7 @@ export default function Form(props) {
           </Box>
         );
       })}
-      {(FooterComponent && <FooterComponent />) || (
+      {(FooterComponent && <FooterComponent destroy={destroyHandler} />) || (
         <Box>
           <Button type="submit" variant="contained" color="primary">
             Send

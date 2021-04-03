@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getRecord} from '../../core/utils';
 import useConfig from '../../hooks/useConfig';
-import {clearDetails, read} from '../../redux/slice';
+import {clearDetails, destroy, read} from '../../redux/slice';
 
 export default function Show(props) {
   const {config, attributes, containerProps, CustomComponent} = props;
@@ -14,6 +14,10 @@ export default function Show(props) {
     getRecord(state, ctxConfig, 'details'),
   );
 
+  const destroyHandler = (destroyer) => {
+    dispatch(destroy({...ctxConfig, destroyer}));
+  };
+
   useEffect(() => {
     dispatch(read({...ctxConfig, reader: config}));
     return () => {
@@ -22,7 +26,13 @@ export default function Show(props) {
   }, [dispatch]);
 
   if (CustomComponent)
-    return <CustomComponent loading={!details} details={details} />;
+    return (
+      <CustomComponent
+        destroy={destroyHandler}
+        loading={!details}
+        details={details}
+      />
+    );
 
   if (!details) return null;
 

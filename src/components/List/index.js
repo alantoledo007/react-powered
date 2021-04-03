@@ -13,7 +13,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getRecord} from '../../core/utils';
 import useConfig from '../../hooks/useConfig';
-import {readMany} from '../../redux/slice';
+import {destroy, readMany} from '../../redux/slice';
 
 export default function List(props) {
   const {config, columns, containerProps, CustomComponent} = props;
@@ -23,12 +23,23 @@ export default function List(props) {
     getRecord(state, ctxConfig, 'records'),
   );
 
+  const destroyHandler = (destroyer) => {
+    dispatch(destroy({...ctxConfig, destroyer}));
+  };
+
   useEffect(() => {
+    if (records !== null) return;
     dispatch(readMany({...ctxConfig, reader: config}));
-  }, [dispatch]);
+  }, [records]);
 
   if (CustomComponent)
-    return <CustomComponent loading={!records} records={records} />;
+    return (
+      <CustomComponent
+        destroy={destroyHandler}
+        loading={!records}
+        records={records}
+      />
+    );
   return (
     <Box {...containerProps}>
       <TableContainer component={Paper}>
@@ -45,6 +56,17 @@ export default function List(props) {
               records.map((item, key) => (
                 <TableRow key={key}>
                   {columns.map((column, key) => {
+                    if (column.CustomComponent) {
+                      return (
+                        <TableCell key={key}>
+                          <column.CustomComponent
+                            item={item}
+                            destroy={destroyHandler}
+                          />
+                        </TableCell>
+                      );
+                    }
+
                     const data = column.dataMap ? column.dataMap(item) : item;
                     return (
                       <TableCell key={key}>

@@ -27,10 +27,17 @@ const slice = createSlice({
         records: data,
       };
     },
+    clearMany(state, action) {
+      const record = action.payload;
+      state[record] = {
+        ...state[record],
+        records: null,
+      };
+    },
   },
 });
 
-export const {setDetails, clearDetails, setMany} = slice.actions;
+export const {setDetails, clearDetails, setMany, clearMany} = slice.actions;
 export default slice.reducer;
 
 export const send = async (props) => {
@@ -66,9 +73,26 @@ const reader = (config, dispatch, action) => {
 };
 
 export const read = (config) => (dispatch) => {
-  reader(config, dispatch, setDetails);
+  return reader(config, dispatch, setDetails);
 };
 
 export const readMany = (config) => (dispatch) => {
-  reader(config, dispatch, setMany);
+  return reader(config, dispatch, setMany);
+};
+
+export const destroy = (config) => (dispatch) => {
+  const {destroyer} = config;
+  return axios
+    .delete(`${config.base_uri}${destroyer.path}`, {
+      headers: {
+        ...config.headers,
+        ...destroyer.headers,
+      },
+    })
+    .then(() => {
+      return dispatch(clearMany(config.name));
+    })
+    .catch((error) => {
+      destroyer.onRequestError(error);
+    });
 };
