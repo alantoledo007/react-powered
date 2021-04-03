@@ -1,8 +1,6 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
 import Show from '../components/Show';
-import useConfig from '../hooks/useConfig';
-import {read} from '../redux/slice';
+import List from '../components/List';
 
 function Reader(config = {}) {
   this.config = {
@@ -22,6 +20,17 @@ Reader.prototype.show = function (CustomComponent) {
       CustomComponent={CustomComponent}
       config={this.config}
       attributes={attributes}
+      containerProps={containerProps}
+    />
+  );
+};
+
+Reader.prototype.list = function (CustomComponent) {
+  return ({columns, containerProps}) => (
+    <List
+      CustomComponent={CustomComponent}
+      config={this.config}
+      columns={columns}
       containerProps={containerProps}
     />
   );

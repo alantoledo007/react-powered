@@ -32,7 +32,7 @@ export default function Form(props) {
 
   const {register, errors, handleSubmit, watch} = useForm(formConfig);
   const readerDefaultValues = useSelector((state) =>
-    getRecord(state, ctxConfig),
+    getRecord(state, ctxConfig, 'details'),
   );
 
   const dispatch = useDispatch();

@@ -20,10 +20,17 @@ const slice = createSlice({
         details: null,
       };
     },
+    setMany(state, action) {
+      const {record, data} = action.payload;
+      state[record] = {
+        ...state[record],
+        records: data,
+      };
+    },
   },
 });
 
-export const {setDetails, clearDetails} = slice.actions;
+export const {setDetails, clearDetails, setMany} = slice.actions;
 export default slice.reducer;
 
 export const send = async (props) => {
@@ -41,7 +48,7 @@ export const send = async (props) => {
   ).catch((error) => send.onRequestError(error));
 };
 
-export const read = (config) => (dispatch) => {
+const reader = (config, dispatch, action) => {
   const {reader} = config;
   return axios
     .get(`${config.base_uri}${reader.path}`, {
@@ -50,12 +57,18 @@ export const read = (config) => (dispatch) => {
         ...reader.headers,
       },
     })
-    .then(async (res) => {
+    .then((res) => {
       return dispatch(
-        setDetails({record: config.name, data: reader.dataMap(res.data)}),
+        action({record: config.name, data: reader.dataMap(res.data)}),
       );
     })
     .catch((error) => reader.onRequestError(error));
 };
 
-export const readMany = (config) => (dispatch) => {};
+export const read = (config) => (dispatch) => {
+  reader(config, dispatch, setDetails);
+};
+
+export const readMany = (config) => (dispatch) => {
+  reader(config, dispatch, setMany);
+};

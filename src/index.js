@@ -3,11 +3,6 @@ import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {Provider} from 'react-redux';
 import ConfigContext from './contexts/ConfigContext';
 import store from './redux/store';
-export {reducer} from './redux/reducer';
-export {default as List} from './views/List';
-export {default as Create} from './views/Create';
-export {default as Update} from './views/Update';
-export {default as Show} from './components/Show';
 
 export {default as Sender} from './core/Sender';
 export {default as Reader} from './core/Reader';

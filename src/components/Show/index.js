@@ -10,7 +10,9 @@ export default function Show(props) {
   const {config, attributes, containerProps, CustomComponent} = props;
   const ctxConfig = useConfig();
   const dispatch = useDispatch();
-  const details = useSelector((state) => getRecord(state, ctxConfig));
+  const details = useSelector((state) =>
+    getRecord(state, ctxConfig, 'details'),
+  );
 
   useEffect(() => {
     dispatch(read({...ctxConfig, reader: config}));
