@@ -7,9 +7,10 @@ export {reducer} from './redux/reducer';
 export {default as List} from './views/List';
 export {default as Create} from './views/Create';
 export {default as Update} from './views/Update';
-export {default as Show} from './views/Show';
+export {default as Show} from './components/Show';
 
-export {default as DataSender} from './core/DataSender';
+export {default as Sender} from './core/Sender';
+export {default as Reader} from './core/Reader';
 
 export const defaultTheme = createMuiTheme({
   palette: {

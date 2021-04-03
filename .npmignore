@@ -1,1 +1,8 @@
 /tests
+/src
+.babelrc
+.gitignore
+.prettierrc.js
+.package-lock.json
+.yarn.lock
+.webpack.config.js

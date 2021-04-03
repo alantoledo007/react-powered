@@ -1,8 +1,8 @@
 import thunk from 'redux-thunk';
-import records from './records.slice';
+import slice from './slice';
 import {configureStore} from '@reduxjs/toolkit';
 
-const reducer = {records};
+const reducer = {react_ui_maker: slice};
 
 const store = configureStore({
   reducer,
