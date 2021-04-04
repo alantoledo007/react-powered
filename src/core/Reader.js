@@ -14,8 +14,8 @@ function Reader(config = {}) {
   };
 }
 
-Reader.prototype.show = function (CustomComponent) {
-  return ({attributes, containerProps}) => (
+Reader.prototype.show = function () {
+  return ({attributes, containerProps, CustomComponent}) => (
     <Show
       CustomComponent={CustomComponent}
       config={this.config}
@@ -25,8 +25,8 @@ Reader.prototype.show = function (CustomComponent) {
   );
 };
 
-Reader.prototype.list = function (CustomComponent) {
-  return ({columns, containerProps}) => (
+Reader.prototype.list = function () {
+  return ({columns, containerProps, CustomComponent}) => (
     <List
       CustomComponent={CustomComponent}
       config={this.config}
