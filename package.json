@@ -15,6 +15,9 @@
   "keywords": [
     "react",
     "redux",
+    "material-ui",
+    "react-hook-forms",
+    "yup",
     "CRUD",
     "UI",
     "API",
