@@ -1,5 +1,13 @@
 # REACT UI MAKER
 
+```
+yarn add react-ui-maker
+
+or
+
+npm install react-ui-maker
+```
+
 With react-ui-maker you can make an user interface for any record or data than you needs send. **We talking about from create simple contact form to a CRUD fully functional in matter of minutes**.
 
 `No matter what the REST API 's, react-ui-maker adapts to it.`
