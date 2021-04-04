@@ -4,7 +4,7 @@ import axios from 'axios';
 const initialState = {};
 
 const slice = createSlice({
-  name: 'react_ui_maker',
+  name: 'react_powered',
   initialState,
   reducers: {
     setDetails(state, action) {

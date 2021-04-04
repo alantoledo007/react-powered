@@ -1,20 +1,20 @@
-# REACT UI MAKER
+# REACT POWERED
 
 ```
-yarn add react-ui-maker
+yarn add react-powered
 
 or
 
-npm install react-ui-maker
+npm install react-powered
 ```
 
-With react-ui-maker you can make an user interface for any record or data than you needs send. **We talking about from create simple contact form to a CRUD fully functional in matter of minutes**.
+With react-powered you can make an user interface for any record or data than you needs send. **We talking about from create simple contact form to a CRUD fully functional in matter of minutes**.
 
-`No matter what the REST API 's, react-ui-maker adapts to it.`
+`No matter what the REST API 's, react-powered adapts to it.`
 
-**react-ui-maker** uses material-ui by default, to guarantee a clear user interface, but this is completely customizable
+**react-powered** uses material-ui by default, to guarantee a clear user interface, but this is completely customizable
 
-In addition to **material-ui**, `react-ui-maker` uses **react-hook-form** with `yup` resolver, avoiding unnecessary re-renders and facilitating form validation.
+In addition to **material-ui**, `react-powered` uses **react-hook-form** with `yup` resolver, avoiding unnecessary re-renders and facilitating form validation.
 
 # Quick example
 
@@ -27,7 +27,7 @@ We are going to make an simple crud of people.
 ### Step 1: Make a layout
 
 ```javascript
-import Provider from 'react-ui-maker';
+import Provider from 'react-powered';
 
 //material-ui (optional)
 import myTheme from '...';
@@ -58,7 +58,7 @@ export default function PeopleLayout({children}) {
 
 ```javascript
 import PeopleLayout from './PeopleLayout';
-import {Reader} from 'react-ui-maker';
+import {Reader} from 'react-powered';
 
 /*
 dataMap receives the information from the endpoint and return  the
@@ -99,7 +99,7 @@ export default function PeopleList() {
 
 ```javascript
 import PeopleLayout from './PeopleLayout';
-import {Sender} from 'react-ui-maker';
+import {Sender} from 'react-powered';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -129,7 +129,7 @@ export default function PeopleList() {
 ### Step 4: Modify your records
 
 ```javascript
-import {Sender} from 'react-ui-maker';
+import {Sender} from 'react-powered';
 import PeopleLayout from './PeopleLayout';
 import * as yup from 'yup';
 import {useRouter} from 'next/router';
@@ -173,7 +173,7 @@ export default function PeopleUpdate() {
 
 ```javascript
 import {useRouter} from 'next/router';
-import {Reader} from 'react-ui-maker';
+import {Reader} from 'react-powered';
 import PeopleLayout from './PeopleLayout';
 
 export default function PeopleShow() {

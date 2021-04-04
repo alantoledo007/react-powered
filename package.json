@@ -1,6 +1,6 @@
 {
-  "name": "react-ui-maker",
-  "version": "0.0.0",
+  "name": "react-powered",
+  "version": "0.0.0-beta",
   "description": "Create an UI with react, consuming an API Rest, really fastly",
   "main": "build/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alantoledo007/react-ui-maker.git"
+    "url": "git+https://github.com/alantoledo007/react-powered.git"
   },
   "keywords": [
     "react",
@@ -27,9 +27,9 @@
   "author": "Alan Toledo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alantoledo007/react-ui-maker/issues"
+    "url": "https://github.com/alantoledo007/react-powered/issues"
   },
-  "homepage": "https://github.com/alantoledo007/react-ui-maker#readme",
+  "homepage": "https://github.com/alantoledo007/react-powered#readme",
   "peerDependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
